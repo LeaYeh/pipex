@@ -3,6 +3,9 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include "error.h"
+# include "libft.h"
+
 # define TRUE 1
 # define FALSE 0
 
@@ -15,10 +18,13 @@ typedef struct s_cmd
 
 typedef struct s_pipex_tab
 {
-	t_cmd	*cmd_list;
-	int		cmd_cnt;
 	int		infile;
 	int		outfile;
+	t_cmd	*cmd_list;
+	int		**pipefd;
+	char	**envp;
+	int		cmd_cnt;
+	int		pipe_cnt;
 }	t_pipex_tab;
 
 void	safe_free(void **buf, size_t elm_size);

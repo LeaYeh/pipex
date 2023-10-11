@@ -1,5 +1,4 @@
-#include "../../include/common.h"
-#include "../../include/pipex.h"
+#include "pipex.h"
 
 void	safe_free(void **buf, size_t elm_size)
 {
@@ -48,5 +47,6 @@ void free_pipex_table(t_pipex_tab *tab)
 	close(tab->infile);
 	close(tab->outfile);
 	free_cmd_list(tab->cmd_list, tab->cmd_cnt);
+	free_array((void **)tab->pipefd, tab->pipe_cnt, sizeof(int));
 	free(tab);
 }

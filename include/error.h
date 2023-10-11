@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 21:42:04 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/08 17:28:29 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/12 00:10:48 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ typedef enum {
 	ERROR_CMD_INVALID,
 	ERROR_INIT_PIPE_FAILED,
 	ERROR_FORK_PROC_FAILED,
-	ERROR_MEM_ALLOC_FAILED
+	ERROR_MEM_ALLOC_FAILED,
+	ERROR_EXEC_FAILED
 } ErrorCode;
 
 typedef struct {
