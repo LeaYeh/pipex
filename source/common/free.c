@@ -33,10 +33,10 @@ void free_cmd_list(t_cmd *cmd_list, int len)
 	i = 0;
 	while (i < len)
 	{
-		safe_free(&cmd_list[i].exec_cmd, sizeof(char));
+		safe_free((void **)&cmd_list[i].exec_cmd, sizeof(char));
 		free_array(
-			cmd_list[i].full_cmd,
-			get_array_len(cmd_list[i].full_cmd),
+			(void **)cmd_list[i].full_cmd,
+			get_array_len((void **)cmd_list[i].full_cmd),
 			sizeof(char));
 		i++;
 	}

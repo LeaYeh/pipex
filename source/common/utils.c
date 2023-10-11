@@ -47,13 +47,16 @@ char	*get_exec_path(char *cmd, char **envp)
 	{
 		part_path = ft_strjoin(all_path[i], separator());
 		exec_path = ft_strjoin(part_path, cmd);
-		safe_free(&part_path, sizeof(char));
+		safe_free((void **)&part_path, sizeof(char));
 		if (access(exec_path, F_OK | X_OK) == 0)
 			return (exec_path);
-		safe_free(&exec_path, sizeof(char));
+		safe_free((void **)&exec_path, sizeof(char));
 		i++;
 	}
-	free_array(all_path, get_array_len(all_path), sizeof(char));
+	free_array(
+		(void **)all_path,
+		get_array_len((void **)all_path),
+		sizeof(char));
 	return (NULL);
 }
 
