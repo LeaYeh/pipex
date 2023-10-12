@@ -6,11 +6,11 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/12 18:51:46 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/12 18:55:05 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/error.h"
+#include "error.h"
 #include "pipex.h"
 #include "libft.h"
 #include "common.h"
