@@ -1,15 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   common.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/12 14:44:18 by lyeh              #+#    #+#             */
+/*   Updated: 2023/10/12 14:44:19 by lyeh             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef COMMON_H
 # define COMMON_H
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "error.h"
-# include "libft.h"
+# include <stdbool.h>
 
 # define TRUE 1
 # define FALSE 0
 
-typedef int	t_bool;
 typedef struct s_cmd
 {
 	char	**full_cmd;

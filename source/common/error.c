@@ -1,5 +1,18 @@
-#include "error.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/12 14:44:34 by lyeh              #+#    #+#             */
+/*   Updated: 2023/10/12 14:44:35 by lyeh             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
+#include "error.h"
+#include "common.h"
 
 void	error_handling(Error error)
 {
@@ -7,7 +20,7 @@ void	error_handling(Error error)
 	exit (error.code);
 }
 
-Error check_input(int argc, char **argv, char **envp, t_bool is_bonus)
+Error check_input(int argc, char **argv, char **envp, bool is_bonus)
 {
 	Error   error;
 
@@ -21,7 +34,7 @@ Error check_input(int argc, char **argv, char **envp, t_bool is_bonus)
 	return (error);
 }
 
-Error check_input_format(int argc, t_bool is_bonus)
+Error check_input_format(int argc, bool is_bonus)
 {
 	Error   error;
 

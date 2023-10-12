@@ -6,15 +6,14 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 21:42:04 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/12 00:10:48 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/12 14:44:22 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_H
 # define ERROR_H
-# include "common.h"
-
 # define MAX_MASSAGE_LEN 256;
+# include <stdbool.h>
 
 typedef enum {
 	ERROR_NONE = 0,
@@ -35,8 +34,8 @@ typedef struct {
 } Error;
 
 void	error_handling(Error error);
-Error	check_input(int argc, char **argv, char **envp, t_bool is_bonus);
-Error	check_input_format(int argc, t_bool is_bonus);
+Error	check_input(int argc, char **argv, char **envp, bool is_bonus);
+Error	check_input_format(int argc, bool is_bonus);
 Error	check_input_cmd(int argc, char **argv, char **envp);
 Error	check_input_file(int argc, char **argv);
 

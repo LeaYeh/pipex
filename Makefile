@@ -43,13 +43,13 @@ $(BUILD_DIR)/%.o: $(BONUS_DIR)/%.c
 
 $(NAME):	$(COMMON_OBJS) $(MAJOR_OBJS)
 			@make -C $(LIBFT_DIR) bonus
-			$(CC) $(CFLAGS) $(COMMON_OBJS) $(MAJOR_OBJS) -o $(NAME)
+			$(CC) $(CFLAGS) $(COMMON_OBJS) $(MAJOR_OBJS) $(LIBFT_DIR)/libft.a -o $(NAME)
 
 all:		$(NAME)
 
 bonus:		$(COMMON_OBJS) $(BONUS_OBJS)
 			@make -C $(LIBFT_DIR) bonus
-			$(CC) $(CFLAGS) $(COMMON_OBJS) $(BONUS_OBJS) -o $(NAME)
+			$(CC) $(CFLAGS) $(COMMON_OBJS) $(BONUS_OBJS) $(LIBFT_DIR)/libft.a -o $(NAME)
 
 clean:
 			@make -C $(LIBFT_DIR) clean

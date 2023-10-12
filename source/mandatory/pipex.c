@@ -1,4 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
+/*   Updated: 2023/10/12 14:45:15 by lyeh             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
+#include "libft.h"
+#include "common.h"
+#include "error.h"
 
 void	create_proc(int fd_in, int fd_out, int cur_idx, t_pipex_tab *tab)
 {
