@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:34 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/12 15:45:14 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/12 18:52:32 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 #include "error.h"
 #include "common.h"
 
-void	error_handling(Error error)
+void	error_handling(t_error error)
 {
 	ft_putstr_fd((char *)error.message, STDERR_FILENO);
 	exit (error.code);
 }
 
-Error check_input(int argc, char **argv, char **envp, bool is_bonus)
+t_error	check_input(int argc, char **argv, char **envp, bool is_bonus)
 {
-	Error   error;
+	t_error	error;
 
 	error = check_input_format(argc, is_bonus);
 	if (error.code != ERROR_NONE)
@@ -34,27 +34,26 @@ Error check_input(int argc, char **argv, char **envp, bool is_bonus)
 	return (error);
 }
 
-Error check_input_format(int argc, bool is_bonus)
+t_error	check_input_format(int argc, bool is_bonus)
 {
-	Error   error;
+	t_error	error;
 
 	error.code = ERROR_NONE;
 	if (!is_bonus && argc != 5)
 	{
 		error.code = ERROR_INVALID_INPUT;
-		error.message = "Mandatory input format: ./pipex infile cmd cmd outfile\n";
+		error.message = "input format: ./pipex infile cmd cmd outfile\n";
 	}
 	return (error);
 }
 
-Error   check_input_cmd(int argc, char **argv, char **envp)
+t_error	check_input_cmd(int argc, char **argv, char **envp)
 {
-	Error   error;
+	t_error	error;
 	int		i;
 	char	**tmp_cmd;
 
 	error.code = ERROR_NONE;
-
 	i = 2;
 	while (i < argc - 1)
 	{
@@ -74,9 +73,9 @@ Error   check_input_cmd(int argc, char **argv, char **envp)
 	return (error);
 }
 
-Error   check_input_file(int argc, char **argv)
+t_error	check_input_file(int argc, char **argv)
 {
-	Error   error;
+	t_error	error;
 
 	error.code = ERROR_NONE;
 	if (access(argv[1], F_OK) != 0 || access(argv[argc - 1], F_OK) != 0)

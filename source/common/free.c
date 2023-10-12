@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:41 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/12 18:19:16 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/12 18:45:33 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_array(void **arr, int count, size_t elm_size)
 	int	i;
 
 	if (arr == NULL || count <= 0)
-        return ;
+		return ;
 	i = 0;
 	while (i < count)
 	{
@@ -38,7 +38,7 @@ void	free_array(void **arr, int count, size_t elm_size)
 	arr = NULL;
 }
 
-void free_cmd_list(t_cmd *cmd_list, int len)
+void	free_cmd_list(t_cmd *cmd_list, int len)
 {
 	int	i;
 
@@ -52,10 +52,10 @@ void free_cmd_list(t_cmd *cmd_list, int len)
 			sizeof(char));
 		i++;
 	}
-	free(cmd_list);	
+	free (cmd_list);
 }
 
-void free_pipex_table(t_pipex_tab *tab)
+void	free_pipex_table(t_pipex_tab *tab)
 {
 	close(tab->infile);
 	close(tab->outfile);

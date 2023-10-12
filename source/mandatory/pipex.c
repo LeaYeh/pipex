@@ -6,21 +6,22 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/12 18:19:07 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/12 18:51:46 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../include/error.h"
 #include "pipex.h"
 #include "libft.h"
 #include "common.h"
-#include "error.h"
 
 void	create_proc(int fd_in, int fd_out, int cur_idx, t_pipex_tab *tab)
 {
 	pid_t	pid;
 	int		i;
 
-	if ((pid = fork()) == -1)
+	pid = fork();
+	if (pid == -1)
 	{
 		free_pipex_table(tab);
 		exit(ERROR_FORK_PROC_FAILED);
@@ -36,8 +37,7 @@ void	create_proc(int fd_in, int fd_out, int cur_idx, t_pipex_tab *tab)
 			close(tab->pipefd[i][1]);
 			i++;
 		}
-		execve(
-			tab->cmd_list[cur_idx].exec_cmd,
+		execve(tab->cmd_list[cur_idx].exec_cmd,
 			tab->cmd_list[cur_idx].full_cmd, tab->envp);
 		free_pipex_table(tab);
 		exit(ERROR_EXEC_FAILED);
@@ -53,13 +53,17 @@ void	pipex(t_pipex_tab *tab)
 	i = 0;
 	while (i < tab->cmd_cnt)
 	{
+		fd_in = tab->infile;
+		fd_out = tab->outfile;
 		if (pipe(tab->pipefd[i]) == -1)
 		{
 			free_pipex_table(tab);
 			exit(ERROR_INIT_PIPE_FAILED);
 		}
-		fd_in = (i == 0) ? tab->infile : tab->pipefd[i][0];
-		fd_out = (i == tab->cmd_cnt - 1) ? tab->outfile : tab->pipefd[i][1];
+		if (i != 0)
+			fd_in = tab->pipefd[i][0];
+		if (i != tab->cmd_cnt - 1)
+			fd_out = tab->pipefd[i][1];
 		create_proc(fd_in, fd_out, i, tab);
 		close(fd_in);
 		close(fd_out);
@@ -67,7 +71,7 @@ void	pipex(t_pipex_tab *tab)
 	}
 }
 
-void init_pipefd(t_pipex_tab *tab)
+void	init_pipefd(t_pipex_tab *tab)
 {
 	int	i;
 
@@ -117,13 +121,14 @@ void	init_pipex_table(int argc, char **argv, char **envp, t_pipex_tab *tab)
 
 int	main(int argc, char **argv, char **envp)
 {
-	Error 	error;
-	t_pipex_tab *tab;
+	t_error		error;
+	t_pipex_tab	*tab;
 
 	error = check_input(argc, argv, envp, FALSE);
 	if (error.code != ERROR_NONE)
 		error_handling(error);
-	if (!(tab = malloc(sizeof(t_pipex_tab) * 1)))
+	tab = malloc(sizeof(t_pipex_tab) * 1);
+	if (!tab)
 		exit(ERROR_MEM_ALLOC_FAILED);
 	init_pipex_table(argc, argv, envp, tab);
 	pipex(tab);

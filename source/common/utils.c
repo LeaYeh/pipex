@@ -6,21 +6,12 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:48 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/12 14:44:49 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/12 18:45:00 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "common.h"
-
-char *separator(void)
-{
-#if defined _WIN32 || defined __CYGWIN__
-	return ("\\");
-#else
-	return ("/");
-#endif
-}
 
 char	*extract_env(char **envp, char *env)
 {
@@ -57,7 +48,7 @@ char	*get_exec_path(char *cmd, char **envp)
 	i = 0;
 	while (all_path && all_path[i])
 	{
-		part_path = ft_strjoin(all_path[i], separator());
+		part_path = ft_strjoin(all_path[i], "/");
 		exec_path = ft_strjoin(part_path, cmd);
 		safe_free((void **)&part_path, sizeof(char));
 		if (access(exec_path, F_OK | X_OK) == 0)
@@ -72,7 +63,7 @@ char	*get_exec_path(char *cmd, char **envp)
 	return (NULL);
 }
 
-int get_array_len(void **arr)
+int	get_array_len(void **arr)
 {
 	int	i;
 

@@ -6,16 +6,15 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 21:42:04 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/12 18:27:36 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/12 18:52:50 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_H
 # define ERROR_H
-# define MAX_MASSAGE_LEN 256;
 # include <stdbool.h>
 
-typedef enum {
+typedef enum s_error_code{
 	ERROR_NONE = 0,
 	ERROR_INVALID_INPUT,
 	ERROR_FILE_NOT_FOUND,
@@ -26,17 +25,17 @@ typedef enum {
 	ERROR_FORK_PROC_FAILED,
 	ERROR_MEM_ALLOC_FAILED,
 	ERROR_EXEC_FAILED
-} ErrorCode;
+}	t_error_code;
 
-typedef struct {
-    ErrorCode code;
-    const char *message;
-} Error;
+typedef struct s_error {
+	t_error_code	code;
+	const char		*message;
+}	t_error;
 
-void	error_handling(Error error);
-Error	check_input(int argc, char **argv, char **envp, bool is_bonus);
-Error	check_input_format(int argc, bool is_bonus);
-Error	check_input_cmd(int argc, char **argv, char **envp);
-Error	check_input_file(int argc, char **argv);
+void	error_handling(t_error error);
+t_error	check_input(int argc, char **argv, char **envp, bool is_bonus);
+t_error	check_input_format(int argc, bool is_bonus);
+t_error	check_input_cmd(int argc, char **argv, char **envp);
+t_error	check_input_file(int argc, char **argv);
 
 #endif
