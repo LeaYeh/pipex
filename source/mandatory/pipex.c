@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/12 14:45:15 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/12 18:19:07 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,16 @@ void	pipex(t_pipex_tab *tab)
 	i = 0;
 	while (i < tab->cmd_cnt)
 	{
-		if (i < tab->pipe_cnt)
+		if (pipe(tab->pipefd[i]) == -1)
 		{
-			if (pipe(tab->pipefd[i]) == -1)
-			{
-				free_pipex_table(tab);
-				exit(ERROR_INIT_PIPE_FAILED);
-			}
+			free_pipex_table(tab);
+			exit(ERROR_INIT_PIPE_FAILED);
 		}
 		fd_in = (i == 0) ? tab->infile : tab->pipefd[i][0];
 		fd_out = (i == tab->cmd_cnt - 1) ? tab->outfile : tab->pipefd[i][1];
 		create_proc(fd_in, fd_out, i, tab);
-		close(tab->pipefd[i][0]);
-		close(tab->pipefd[i][1]);
+		close(fd_in);
+		close(fd_out);
 		i++;
 	}
 }
@@ -74,12 +71,11 @@ void init_pipefd(t_pipex_tab *tab)
 {
 	int	i;
 
-	tab->pipe_cnt = tab->cmd_cnt - 1;
-	tab->pipefd = (int **)malloc(sizeof(int *) * tab->pipe_cnt);
+	tab->pipefd = (int **)malloc(sizeof(int *) * tab->cmd_cnt);
 	if (!tab->pipefd)
 		exit(ERROR_MEM_ALLOC_FAILED);
 	i = 0;
-	while (i < tab->pipe_cnt)
+	while (i < tab->cmd_cnt)
 	{
 		tab->pipefd[i] = (int *)malloc(sizeof(int) * 2);
 		if (!tab->pipefd[i])
@@ -96,7 +92,7 @@ void	init_pipex_table(int argc, char **argv, char **envp, t_pipex_tab *tab)
 	int		i;
 	char	**full_cmd;
 
-	tab->cmd_list = (t_cmd *)malloc(sizeof(t_cmd) * (argc - 3));
+	tab->cmd_list = malloc(sizeof(t_cmd) * (argc - 3));
 	if (!tab->cmd_list)
 		exit(ERROR_MEM_ALLOC_FAILED);
 	tab->cmd_cnt = argc - 3;
@@ -115,7 +111,6 @@ void	init_pipex_table(int argc, char **argv, char **envp, t_pipex_tab *tab)
 	}
 	tab->infile = open(argv[1], O_RDONLY);
 	tab->outfile = open(argv[argc - 1], O_TRUNC | O_CREAT | O_RDWR, 0644);
-	tab->pipe_cnt = tab->cmd_cnt - 1;
 	init_pipefd(tab);
 	tab->envp = envp;
 }
@@ -128,7 +123,8 @@ int	main(int argc, char **argv, char **envp)
 	error = check_input(argc, argv, envp, FALSE);
 	if (error.code != ERROR_NONE)
 		error_handling(error);
-	tab = NULL;
+	if (!(tab = malloc(sizeof(t_pipex_tab) * 1)))
+		exit(ERROR_MEM_ALLOC_FAILED);
 	init_pipex_table(argc, argv, envp, tab);
 	pipex(tab);
 	free_pipex_table(tab);
