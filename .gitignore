@@ -54,3 +54,7 @@ dkms.conf
 # testing file
 *test*
 .vscode/*
+input*
+out*
+
+pipex
