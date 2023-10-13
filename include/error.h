@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 21:42:04 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/13 12:47:40 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/13 18:12:11 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ typedef enum s_error_code{
 	ERROR_INIT_PIPE_FAILED,
 	ERROR_FORK_PROC_FAILED,
 	ERROR_MEM_ALLOC_FAILED,
-	ERROR_EXEC_FAILED
+	ERROR_EXEC_FAILED,
+	ERROR_CLOSE_FD_FAILED
 }	t_error_code;
 
 typedef struct s_error {

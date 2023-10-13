@@ -10,7 +10,8 @@ LIBFT_DIR	:= $(SRC_DIR)/libft
 COMMON_SRCS	:= error.c \
 			free.c \
 			utils.c
-MAJOR_SRCS	:= pipex.c
+MAJOR_SRCS	:= pipex.c \
+			process.c
 BONUS_SRCS	:= pipex_bonus.c
 
 COMMON_SRCS := $(addprefix $(COMMON_DIR)/, $(COMMON_SRCS))

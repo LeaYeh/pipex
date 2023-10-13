@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:48 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/13 12:49:25 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/13 13:35:52 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ char	*get_exec_path(char *cmd, char **envp)
 		safe_free((void **)&exec_path, sizeof(char));
 		i++;
 	}
-	safe_free((void **)&exec_path, sizeof(char));
-	free_array((void **)all_path, sizeof(char));
+	free_array((void **)all_path, -1, sizeof(char));
 	return (exec_path);
 }
 
