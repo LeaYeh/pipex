@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/12 18:55:05 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/12 19:22:37 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	init_pipefd(t_pipex_tab *tab)
 	if (!tab->pipefd)
 		exit(ERROR_MEM_ALLOC_FAILED);
 	i = 0;
+	tab->pipe_cnt = 0;
 	while (i < tab->cmd_cnt)
 	{
 		tab->pipefd[i] = (int *)malloc(sizeof(int) * 2);
@@ -88,6 +89,7 @@ void	init_pipefd(t_pipex_tab *tab)
 			exit(ERROR_MEM_ALLOC_FAILED);
 		}
 		i++;
+		tab->pipe_cnt = i;
 	}
 }
 

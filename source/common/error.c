@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:34 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/12 18:52:32 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/13 12:53:23 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,23 +52,26 @@ t_error	check_input_cmd(int argc, char **argv, char **envp)
 	t_error	error;
 	int		i;
 	char	**tmp_cmd;
+	char	*exec_cmd;
 
 	error.code = ERROR_NONE;
 	i = 2;
 	while (i < argc - 1)
 	{
-		tmp_cmd = ft_split(argv[i], ' ');
+		tmp_cmd = ft_split(argv[i++], ' ');
 		if (!tmp_cmd)
 			exit(ERROR_MEM_ALLOC_FAILED);
-		if (!get_exec_path(tmp_cmd[0], envp))
+		exec_cmd = get_exec_path(tmp_cmd[0], envp);
+		if (!exec_cmd)
 		{
 			error.code = ERROR_CMD_INVALID;
 			error.message = "Command is not exist or no permission\n";
+			free_array((void **)tmp_cmd, sizeof(char));
+			safe_free((void **)&exec_cmd, sizeof(char));
 			return (error);
 		}
-		free_array(
-			(void **)tmp_cmd, get_array_len((void **)tmp_cmd), sizeof(char));
-		i++;
+		safe_free((void **)&exec_cmd, sizeof(char));
+		free_array((void **)tmp_cmd, sizeof(char));
 	}
 	return (error);
 }
