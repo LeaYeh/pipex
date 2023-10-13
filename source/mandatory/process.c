@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 19:07:56 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/13 19:12:42 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/13 20:26:21 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ void	do_child(int fd_in, int fd_out, int cur_idx, t_pipex_tab *tab)
 {
 	int		i;
 
-	dup2(fd_in, STDIN_FILENO);
-	dup2(fd_out, STDOUT_FILENO);
+	if (fd_in != STDIN_FILENO)
+		dup2(fd_in, STDIN_FILENO);
+	if (fd_out != STDOUT_FILENO)
+		dup2(fd_out, STDOUT_FILENO);
 	i = 0;
 	while (i < cur_idx)
 	{

@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:41 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/13 18:51:05 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/13 20:21:37 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,21 +62,21 @@ void	free_cmd_list(t_cmd *cmd_list, int len)
 
 void	free_pipe_list(int **pipe_arr, int pipe_cnt)
 {
-	int	i;
-	int	close_status;
+	// int	i;
+	// int	close_status;
 
-	i = 0;
-	while (i < pipe_cnt - 1)
-	{
-		close_status = close(pipe_arr[i][0]);
-		close_status = close(pipe_arr[i][1]);
-		if (close_status < 0)
-		{
-			perror("Error closing file");
-			exit(ERROR_CLOSE_FD_FAILED);
-		}
-		i++;
-	}
+	// i = 0;
+	// while (i < pipe_cnt - 1)
+	// {
+	// 	close_status = close(pipe_arr[i][0]);
+	// 	close_status |= close(pipe_arr[i][1]);
+	// 	if (close_status != 0)
+	// 	{
+	// 		perror("Error closing file");
+	// 		exit(ERROR_CLOSE_FD_FAILED);
+	// 	}
+	// 	i++;
+	// }
 	free_array((void **)pipe_arr, pipe_cnt, sizeof(int) * 2);
 }
 

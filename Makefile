@@ -12,7 +12,8 @@ COMMON_SRCS	:= error.c \
 			utils.c
 MAJOR_SRCS	:= pipex.c \
 			process.c
-BONUS_SRCS	:= pipex_bonus.c
+BONUS_SRCS	:= pipex.c \
+			process.c
 
 COMMON_SRCS := $(addprefix $(COMMON_DIR)/, $(COMMON_SRCS))
 MAJOR_SRCS := $(addprefix $(MAJOR_DIR)/, $(MAJOR_SRCS))

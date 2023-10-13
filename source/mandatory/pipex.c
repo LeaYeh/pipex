@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/13 19:08:26 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/13 20:19:04 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ void	pipex(t_pipex_tab *tab)
 		}
 		if (i != 0)
 			fd_in = tab->pipefd[i][0];
-		if (i != tab->pipe_cnt - 1)
+		if (i != tab->cmd_cnt - 1)
 			fd_out = tab->pipefd[i][1];
 		create_proc(fd_in, fd_out, i, tab);
-		close(fd_in);
-		close(fd_out);
+		close(tab->pipefd[i][0]);
+		close(tab->pipefd[i][1]);
 		i++;
 	}
 }
