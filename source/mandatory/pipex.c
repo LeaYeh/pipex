@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/16 16:26:41 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/16 18:08:59 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,7 @@ void	init_pipex_table(int argc, char **argv, char **envp, t_pipex_tab *tab)
 			free_cmd_list(tab->cmd_list, i);
 			exit(ERROR_MEM_ALLOC_FAILED);
 		}
-		set_cmd_params(get_exec_path(full_cmd[0], envp), full_cmd);
-		tab->cmd_list[i].exec_cmd = full_cmd[0];
-		tab->cmd_list[i].full_cmd = full_cmd;
+		set_cmd_params(&tab, full_cmd, envp);
 		i++;
 	}
 	tab->infile = open(argv[1], O_RDONLY);
