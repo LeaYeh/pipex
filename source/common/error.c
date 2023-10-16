@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:34 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/13 14:05:54 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/16 15:55:23 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,12 @@ t_error	check_input_cmd(int argc, char **argv, char **envp)
 		{
 			error.code = ERROR_CMD_INVALID;
 			error.message = "Command is not exist or no permission\n";
-			free_array((void **)tmp_cmd, -1, sizeof(char));
-			safe_free((void **)&exec_cmd, sizeof(char));
+			free_array((void **)tmp_cmd, -1);
+			safe_free((void **)&exec_cmd);
 			return (error);
 		}
-		safe_free((void **)&exec_cmd, sizeof(char));
-		free_array((void **)tmp_cmd, -1, sizeof(char));
+		safe_free((void **)&exec_cmd);
+		free_array((void **)tmp_cmd, -1);
 	}
 	return (error);
 }

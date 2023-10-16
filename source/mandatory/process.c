@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 19:07:56 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/13 20:26:21 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/16 16:02:37 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,6 @@ void	do_parent(int pid)
 	int	status;
 
 	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		printf("子进程正常结束，退出状态：%d\n", WEXITSTATUS(status));
-	else if (WIFSIGNALED(status))
-		printf("子进程因信号结束，信号号码：%d\n", WTERMSIG(status));
-	else
-		printf("子进程结束状态未知\n");
 }
 
 void	do_child(int fd_in, int fd_out, int cur_idx, t_pipex_tab *tab)
@@ -35,7 +29,7 @@ void	do_child(int fd_in, int fd_out, int cur_idx, t_pipex_tab *tab)
 	if (fd_out != STDOUT_FILENO)
 		dup2(fd_out, STDOUT_FILENO);
 	i = 0;
-	while (i < cur_idx)
+	while (i <= cur_idx)
 	{
 		close(tab->pipefd[i][0]);
 		close(tab->pipefd[i][1]);

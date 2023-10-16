@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/13 20:19:04 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/16 16:26:41 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,13 @@ void	init_pipefd(t_pipex_tab *tab)
 	while (i < tab->cmd_cnt)
 	{
 		tab->pipefd[i] = (int *)malloc(sizeof(int) * 2);
+		tab->pipe_cnt = i + 1;
 		if (!tab->pipefd[i])
 		{
 			free_pipex_table(tab);
 			exit(ERROR_MEM_ALLOC_FAILED);
 		}
-		tab->pipe_cnt = ++i;
+		i++;
 	}
 }
 
@@ -83,8 +84,9 @@ void	init_pipex_table(int argc, char **argv, char **envp, t_pipex_tab *tab)
 			free_cmd_list(tab->cmd_list, i);
 			exit(ERROR_MEM_ALLOC_FAILED);
 		}
+		set_cmd_params(get_exec_path(full_cmd[0], envp), full_cmd);
+		tab->cmd_list[i].exec_cmd = full_cmd[0];
 		tab->cmd_list[i].full_cmd = full_cmd;
-		tab->cmd_list[i].exec_cmd = get_exec_path(full_cmd[0], envp);
 		i++;
 	}
 	tab->infile = open(argv[1], O_RDONLY);
@@ -98,7 +100,7 @@ int	main(int argc, char **argv, char **envp)
 	t_error		error;
 	t_pipex_tab	*tab;
 
-	error = check_input(argc, argv, envp, FALSE);
+	error = check_input(argc, argv, envp, TRUE);
 	if (error.code != ERROR_NONE)
 		error_handling(error);
 	tab = malloc(sizeof(t_pipex_tab) * 1);

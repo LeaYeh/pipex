@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:41 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/13 20:21:37 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/16 16:00:10 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,15 @@
 #include "common.h"
 #include "error.h"
 
-void	safe_free(void **buf, size_t elm_size)
+void	safe_free(void **buf)
 {
 	if (*buf == NULL)
 		return ;
-	if (elm_size != sizeof(char))
-		ft_memset(*buf, 0, elm_size);
-	else
-		free(*buf);
+	free(*buf);
 	*buf = NULL;
 }
 
-void	free_array(void **arr, int count, size_t elm_size)
+void	free_array(void **arr, int count)
 {
 	int	i;
 
@@ -39,7 +36,7 @@ void	free_array(void **arr, int count, size_t elm_size)
 	while (i < count)
 	{
 		if (arr[i])
-			safe_free(&arr[i], elm_size);
+			safe_free(&arr[i]);
 		i++;
 	}
 	free(arr);
@@ -53,8 +50,8 @@ void	free_cmd_list(t_cmd *cmd_list, int len)
 	i = 0;
 	while (i < len)
 	{
-		safe_free((void **)&cmd_list[i].exec_cmd, sizeof(char));
-		free_array((void **)cmd_list[i].full_cmd, -1, sizeof(char));
+		safe_free((void **)&cmd_list[i].exec_cmd);
+		free_array((void **)cmd_list[i].full_cmd, -1);
 		i++;
 	}
 	free (cmd_list);
@@ -77,7 +74,7 @@ void	free_pipe_list(int **pipe_arr, int pipe_cnt)
 	// 	}
 	// 	i++;
 	// }
-	free_array((void **)pipe_arr, pipe_cnt, sizeof(int) * 2);
+	free_array((void **)pipe_arr, pipe_cnt);
 }
 
 void	free_pipex_table(t_pipex_tab *tab)

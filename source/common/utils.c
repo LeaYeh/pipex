@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:48 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/13 13:35:52 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/16 16:25:37 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,15 @@ char	*extract_env(char **envp, char *env)
 	return (path);
 }
 
+void	set_cmd_params(char *exec_cmd, char **full_cmd)
+{
+	char	*tmp;
+
+	tmp = full_cmd[0];
+	full_cmd[0] = exec_cmd;
+	safe_free((void **)&tmp);
+}
+
 char	*get_exec_path(char *cmd, char **envp)
 {
 	char	**all_path;
@@ -45,19 +54,19 @@ char	*get_exec_path(char *cmd, char **envp)
 
 	exec_path = extract_env(envp, "PATH");
 	all_path = ft_split(exec_path, ':');
-	safe_free((void **)&exec_path, sizeof(char));
+	safe_free((void **)&exec_path);
 	i = 0;
 	while (all_path && all_path[i])
 	{
 		part_path = ft_strjoin(all_path[i], "/");
 		exec_path = ft_strjoin(part_path, cmd);
-		safe_free((void **)&part_path, sizeof(char));
+		safe_free((void **)&part_path);
 		if (access(exec_path, F_OK | X_OK) == 0)
 			break ;
-		safe_free((void **)&exec_path, sizeof(char));
+		safe_free((void **)&exec_path);
 		i++;
 	}
-	free_array((void **)all_path, -1, sizeof(char));
+	free_array((void **)all_path, -1);
 	return (exec_path);
 }
 
