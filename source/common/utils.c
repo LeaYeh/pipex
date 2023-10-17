@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:48 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/16 18:08:34 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/17 14:42:12 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@ char	*extract_env(char **envp, char *env)
 	return (path);
 }
 
-void	set_cmd_params(t_pipex_tab **tab, char **full_cmd, char **envp)
+void	set_cmd_params(t_cmd *cmd, char **full_cmd, char **envp)
 {
-	char	**tmp;
+	char	*tmp;
 
-	tmp = &full_cmd[0];
-	full_cmd[0] = get_exec_path(*tmp, envp);
-	safe_free((void **)tmp);
+	tmp = full_cmd[0];
+	full_cmd[0] = get_exec_path(tmp, envp);
+	cmd->full_cmd = full_cmd;
+	safe_free((void **)&tmp);
 }
 
 char	*get_exec_path(char *cmd, char **envp)

@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 19:07:56 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/16 16:02:37 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/17 14:52:25 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	do_child(int fd_in, int fd_out, int cur_idx, t_pipex_tab *tab)
 		close(tab->pipefd[i][1]);
 		i++;
 	}
-	execve(tab->cmd_list[cur_idx].exec_cmd,
+	execve(tab->cmd_list[cur_idx].full_cmd[0],
 		tab->cmd_list[cur_idx].full_cmd, tab->envp);
 	free_pipex_table(tab);
 	exit(ERROR_EXEC_FAILED);
