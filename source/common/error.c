@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:34 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/17 17:40:46 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/18 16:28:49 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,12 @@ t_error	check_input_file(int argc, char **argv)
 	t_error	error;
 
 	error.code = ERROR_NONE;
-	if (access(argv[1], F_OK) != 0 || access(argv[argc - 1], F_OK) != 0)
+	if (access(argv[1], F_OK) != 0)
+	{
+		error.code = ERROR_FILE_NOT_FOUND;
+		error.message = "File is not exist.\n";
+	}
+	if (access(argv[argc - 1], F_OK) != 0)
 	{
 		error.code = ERROR_FILE_NOT_FOUND;
 		error.message = "File is not exist.\n";

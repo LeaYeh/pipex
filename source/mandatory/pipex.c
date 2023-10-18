@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/18 13:48:42 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/18 18:17:23 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,31 +36,33 @@ void	pipex(t_pipex_tab *tab)
 		if (i < tab->cmd_cnt - 1)
 			fd_out = tab->pipefd[i][1];
 		create_proc(fd_in, fd_out, i, tab);
+		// here to close pipe
 		i++;
 	}
+	// here close all pipe elm
+	// here loop all waitpid 
 }
 
 void	init_pipefd(t_pipex_tab *tab)
 {
 	int	i;
 
-	tab->pipefd = (int **)malloc(sizeof(int *) * tab->cmd_cnt);
+	tab->pipefd = (int **)malloc(sizeof(int *) * (tab->cmd_cnt - 1));
 	if (!tab->pipefd)
 	{
 		free_pipex_table(tab);
 		exit(ERROR_MEM_ALLOC_FAILED);
 	}
 	i = 0;
-	while (i < tab->cmd_cnt)
+	while (i < (tab->cmd_cnt - 1))
 	{
 		tab->pipefd[i] = (int *)malloc(sizeof(int) * 2);
-		tab->pipe_cnt = i + 1;
 		if (!tab->pipefd[i])
 		{
 			free_pipex_table(tab);
 			exit(ERROR_MEM_ALLOC_FAILED);
 		}
-		i++;
+		tab->pipe_cnt = ++i;
 	}
 }
 
@@ -103,6 +105,7 @@ int	main(int argc, char **argv, char **envp)
 	if (!tab)
 		exit(ERROR_MEM_ALLOC_FAILED);
 	init_pipex_table(argc, argv, envp, tab);
+	print_pipx_table(tab);
 	pipex(tab);
 	free_pipex_table(tab);
 	exit(ERROR_NONE);
