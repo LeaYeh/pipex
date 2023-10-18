@@ -26,7 +26,7 @@ BONUS_OBJS := $(patsubst $(BONUS_DIR)/%.c, $(BUILD_DIR)/%.o, $(BONUS_SRCS))
 CC			= cc
 RM			= rm -f
 
-CFLAGS		= -Wall -Wextra -Werror -g -I$(INC_DIR) -I$(LIBFT_DIR)
+CFLAGS		= -Wall -Wextra -Werror -g -gdwarf-4 -I$(INC_DIR) -I$(LIBFT_DIR)
 
 $(BUILD_DIR)/%.o: $(COMMON_DIR)/%.c
 			@mkdir -p $(@D)

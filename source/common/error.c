@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:34 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/16 15:55:23 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/17 17:40:46 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,12 @@ t_error	check_input_format(int argc, bool is_bonus)
 	if (!is_bonus && argc != 5)
 	{
 		error.code = ERROR_INVALID_INPUT;
-		error.message = "input format: ./pipex infile cmd cmd outfile\n";
+		error.message = "./pipex infile cmd1 cmd2 outfile\n";
+	}
+	else if (is_bonus && argc < 4)
+	{
+		error.code = ERROR_INVALID_INPUT;
+		error.message = "./pipex infile cmd1 ... cmd[n] outfile (n >= 1)\n";
 	}
 	return (error);
 }
