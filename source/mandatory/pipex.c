@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/18 18:17:23 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/18 22:03:13 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,12 @@ void	init_pipex_table(int argc, char **argv, char **envp, t_pipex_tab *tab)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_error		error;
-	t_pipex_tab	*tab;
+	t_error_code	error_code;
+	t_pipex_tab		*tab;
 
-	error = check_input(argc, argv, envp, TRUE);
-	if (error.code != ERROR_NONE)
-		error_handling(error);
+	error_code = check_input(argc, argv, envp, TRUE);
+	if (error_code != ERROR_NONE)
+		exit(error_code);
 	tab = malloc(sizeof(t_pipex_tab) * 1);
 	if (!tab)
 		exit(ERROR_MEM_ALLOC_FAILED);

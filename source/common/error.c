@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:34 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/18 16:28:49 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/18 22:10:55 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,40 @@
 #include "error.h"
 #include "common.h"
 
-void	error_handling(t_error error)
+t_error_code	check_input(int argc, char **argv, char **envp, bool is_bonus)
 {
-	ft_putstr_fd((char *)error.message, STDERR_FILENO);
-	exit (error.code);
+	if (!check_input_format(argc, is_bonus))
+		return (ERROR_INVALID_INPUT);
+	if (!check_file(argc, argv))
+		return (ERROR_INVALID_FILE);
+	if (!check_input_cmd(argc, argv, envp))
+		return (ERROR_INVALID_CMD);
+	return (ERROR_NONE);
 }
 
-t_error	check_input(int argc, char **argv, char **envp, bool is_bonus)
+bool	check_input_format(int argc, bool is_bonus)
 {
-	t_error	error;
-
-	error = check_input_format(argc, is_bonus);
-	if (error.code != ERROR_NONE)
-		return (error);
-	error = check_input_cmd(argc, argv, envp);
-	if (error.code != ERROR_NONE)
-		return (error);
-	error = check_input_file(argc, argv);
-	return (error);
-}
-
-t_error	check_input_format(int argc, bool is_bonus)
-{
-	t_error	error;
-
-	error.code = ERROR_NONE;
 	if (!is_bonus && argc != 5)
 	{
-		error.code = ERROR_INVALID_INPUT;
-		error.message = "./pipex infile cmd1 cmd2 outfile\n";
+		dprintf(2, "./pipex: infile cmd1 cmd2 outfile\n");
+		return (false);
 	}
 	else if (is_bonus && argc < 4)
 	{
-		error.code = ERROR_INVALID_INPUT;
-		error.message = "./pipex infile cmd1 ... cmd[n] outfile (n >= 1)\n";
+		dprintf(2, "./pipex: infile cmd1 ... cmd[n] outfile (n >= 1)\n");
+		return (false);
 	}
-	return (error);
+	return (true);
 }
 
-t_error	check_input_cmd(int argc, char **argv, char **envp)
+bool	check_input_cmd(int argc, char **argv, char **envp)
 {
-	t_error	error;
+	bool	ret;
 	int		i;
 	char	**tmp_cmd;
 	char	*exec_cmd;
-
-	error.code = ERROR_NONE;
+	
+	ret = true;
 	i = 2;
 	while (i < argc - 1)
 	{
@@ -69,42 +57,41 @@ t_error	check_input_cmd(int argc, char **argv, char **envp)
 		exec_cmd = get_exec_path(tmp_cmd[0], envp);
 		if (!exec_cmd)
 		{
-			error.code = ERROR_CMD_INVALID;
-			error.message = "Command is not exist or no permission\n";
-			free_array((void **)tmp_cmd, -1);
-			safe_free((void **)&exec_cmd);
-			return (error);
+			dprintf(2, "./pipex: %s: command not found\n", tmp_cmd[0]);
+			ret = false;
+		}
+		else if (access(exec_cmd, X_OK) != 0)
+		{
+			dprintf(2, "./pipex: %s: Permission denied\n", tmp_cmd[0]);
+			ret = false;
 		}
 		safe_free((void **)&exec_cmd);
 		free_array((void **)tmp_cmd, -1);
 	}
-	return (error);
+	return (ret);
 }
 
-t_error	check_input_file(int argc, char **argv)
+bool	check_file(int argc, char **argv)
 {
-	t_error	error;
+	bool	ret;
 
-	error.code = ERROR_NONE;
+	ret = true;
 	if (access(argv[1], F_OK) != 0)
 	{
-		error.code = ERROR_FILE_NOT_FOUND;
-		error.message = "File is not exist.\n";
-	}
-	if (access(argv[argc - 1], F_OK) != 0)
-	{
-		error.code = ERROR_FILE_NOT_FOUND;
-		error.message = "File is not exist.\n";
+		dprintf(2, "./pipex: %s: No such file or directory\n", argv[1]);
+		ret = false;
 	}
 	else if (access(argv[1], R_OK) != 0)
 	{
-		error.code = ERROR_FILE_NOT_READABLE;
-		error.message = "Input file is not readable.\n";
+		dprintf(2, "./pipex: %s: Permission denied\n", argv[1]);
+		ret = false;
 	}
+	if (access(argv[argc - 1], F_OK) != 0)
+		open(argv[argc - 1], O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR);
 	else if (access(argv[argc - 1], W_OK) != 0)
 	{
-		error.code = ERROR_FILE_NOT_WRITABLE;
-		error.message = "Output file is not writable.\n";
+		dprintf(2, "./pipex: %s: Permission denied\n", argv[argc - 1]);
+		ret = false;
 	}
-	return (error);
+	return (ret);
 }
