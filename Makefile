@@ -9,8 +9,7 @@ LIBFT_DIR	:= $(SRC_DIR)/libft
 
 COMMON_SRCS	:= error.c \
 			free.c \
-			utils.c \
-			debug.c
+			utils.c
 MAJOR_SRCS	:= pipex.c \
 			process.c
 BONUS_SRCS	:= pipex.c \

@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:18 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/18 22:01:17 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/19 00:42:56 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 typedef struct s_cmd
 {
+	char	*exec_cmd;
 	char	**full_cmd;
 }	t_cmd;
 
@@ -33,18 +34,14 @@ typedef struct s_pipex_tab
 	int		infile;
 	int		outfile;
 	t_cmd	*cmd_list;
-	int		**pipefd;
 	char	**envp;
 	int		cmd_cnt;
-	int		pipe_cnt;
 }	t_pipex_tab;
 
 void	safe_free(void **buf);
 void	free_array(void **arr, int count);
 void	free_cmd_list(t_cmd *cmd_list, int len);
 void	free_pipex_table(t_pipex_tab *tab);
-void	close_pipe_array(int **pipe_list, int len);
-void	print_pipx_table(t_pipex_tab *tab);
 
 char	*extract_env(char **envp, char *env);
 char	*get_exec_path(char *cmd, char **envp);
