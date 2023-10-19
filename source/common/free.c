@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:41 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/19 00:47:48 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/19 11:39:28 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ void	free_cmd_list(t_cmd *cmd_list, int len)
 void	free_pipex_table(t_pipex_tab *tab)
 {
 	free_cmd_list(tab->cmd_list, tab->cmd_cnt);
+	free_array((void **)&tab->child_pid_list, tab->cmd_cnt);
 	free(tab);
 }

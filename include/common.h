@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:18 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/19 00:42:56 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/19 11:39:14 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_pipex_tab
 	t_cmd	*cmd_list;
 	char	**envp;
 	int		cmd_cnt;
+	int		*child_pid_list;
 }	t_pipex_tab;
 
 void	safe_free(void **buf);

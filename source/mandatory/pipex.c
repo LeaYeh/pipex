@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/19 00:47:52 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/19 16:16:50 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,22 @@ static void	_setup_fd(int *fd_in, int *fd_out, int idx, t_pipex_tab *tab)
 
 	if (pipe(pipefd) == -1)
 	{
+		close(prev_read_end);
 		free_pipex_table(tab);
 		exit(ERROR_INIT_PIPE_FAILED);
 	}
-	*fd_in = tab->infile;
-	*fd_out = tab->outfile;
+	// *fd_in = tab->infile;
+	// *fd_out = tab->outfile;
 	if (idx == 0)
+	{
+		*fd_in = tab->infile;
 		*fd_out = pipefd[1];
+	}
 	else if (idx == tab->cmd_cnt - 1)
+	{
 		*fd_in = prev_read_end;
+		*fd_out = tab->outfile;
+	}
 	else
 	{
 		*fd_in = prev_read_end;
@@ -44,6 +51,7 @@ void	pipex(t_pipex_tab *tab)
 	int	i;
 	int	fd_in;
 	int	fd_out;
+	int	status;
 
 	i = 0;
 	while (i < tab->cmd_cnt)
@@ -54,6 +62,18 @@ void	pipex(t_pipex_tab *tab)
 		close(fd_out);
 		i++;
 	}
+	while (tab->cmd_cnt-- > 0)
+	{
+		waitpid(tab->child_pid_list[tab->cmd_cnt], &status, 0);
+		if (WIFEXITED(status))
+			dprintf(2, "(%s) process[%d] success.\n",
+					tab->cmd_list[tab->cmd_cnt].full_cmd[0],
+					tab->child_pid_list[tab->cmd_cnt]);
+		else if (WIFSIGNALED(status))
+			dprintf(2, "(%s) process[%d] terminated by signal.\n",
+					tab->cmd_list[tab->cmd_cnt].full_cmd[0],
+					tab->child_pid_list[tab->cmd_cnt]);
+	}
 }
 
 void	init_pipex_table(int argc, char **argv, char **envp, t_pipex_tab *tab)
@@ -63,6 +83,9 @@ void	init_pipex_table(int argc, char **argv, char **envp, t_pipex_tab *tab)
 
 	tab->cmd_list = malloc(sizeof(t_cmd) * (argc - 3));
 	if (!tab->cmd_list)
+		exit(ERROR_MEM_ALLOC_FAILED);
+	tab->child_pid_list = ft_calloc(argc - 3, sizeof(int));
+	if (tab->child_pid_list == NULL)
 		exit(ERROR_MEM_ALLOC_FAILED);
 	tab->cmd_cnt = argc - 3;
 	i = 0;

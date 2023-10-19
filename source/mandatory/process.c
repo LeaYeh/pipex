@@ -6,19 +6,12 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 19:07:56 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/19 00:31:18 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/19 16:34:24 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 #include "error.h"
-
-void	do_parent(int pid)
-{
-	int	status;
-
-	waitpid(pid, &status, 0);
-}
 
 void	do_child(int fd_in, int fd_out, int cur_idx, t_pipex_tab *tab)
 {
@@ -45,5 +38,5 @@ void	create_proc(int fd_in, int fd_out, int cur_idx, t_pipex_tab *tab)
 	else if (pid == 0)
 		do_child(fd_in, fd_out, cur_idx, tab);
 	else
-		do_parent(pid);
+		tab->child_pid_list[cur_idx] = pid;
 }
