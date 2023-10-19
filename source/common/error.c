@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:34 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/19 17:29:00 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/20 00:27:42 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_error_code	check_input(int argc, char **argv, char **envp, bool is_bonus)
 	if (!check_file(argc, argv))
 		return (ERROR_INVALID_FILE);
 	if (!check_input_cmd(argc, argv, envp))
-		return (ERROR_INVALID_CMD);
+		return (ERROR_NONE);
 	return (ERROR_NONE);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/19 17:28:27 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/20 00:22:01 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,21 @@ static void	_setup_fd(int *fd_in, int *fd_out, int idx, t_pipex_tab *tab)
 	static int	prev_read_end;
 	int			pipefd[2];
 
-	if (pipe(pipefd) == -1)
+	if (idx < (tab->cmd_cnt - 1))
 	{
-		close(prev_read_end);
-		free_pipex_table(tab);
-		exit(ERROR_INIT_PIPE_FAILED);
+		if (pipe(pipefd) == -1)
+		{
+			close(prev_read_end);
+			free_pipex_table(tab);
+			exit(ERROR_INIT_PIPE_FAILED);
+		}
 	}
-	// *fd_in = tab->infile;
-	// *fd_out = tab->outfile;
+	*fd_in = tab->infile;
+	*fd_out = tab->outfile;
 	if (idx == 0)
-	{
-		*fd_in = tab->infile;
 		*fd_out = pipefd[1];
-	}
 	else if (idx == tab->cmd_cnt - 1)
-	{
 		*fd_in = prev_read_end;
-		*fd_out = tab->outfile;
-	}
 	else
 	{
 		*fd_in = prev_read_end;
