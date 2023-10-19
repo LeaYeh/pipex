@@ -6,13 +6,14 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/19 16:16:50 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/19 17:28:27 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
 #include "pipex.h"
 #include "libft.h"
+#include "ft_printf.h"
 #include "common.h"
 
 static void	_setup_fd(int *fd_in, int *fd_out, int idx, t_pipex_tab *tab)
@@ -66,11 +67,11 @@ void	pipex(t_pipex_tab *tab)
 	{
 		waitpid(tab->child_pid_list[tab->cmd_cnt], &status, 0);
 		if (WIFEXITED(status))
-			dprintf(2, "(%s) process[%d] success.\n",
+			ft_dprintf(2, "(%s) process[%d] success.\n",
 					tab->cmd_list[tab->cmd_cnt].full_cmd[0],
 					tab->child_pid_list[tab->cmd_cnt]);
 		else if (WIFSIGNALED(status))
-			dprintf(2, "(%s) process[%d] terminated by signal.\n",
+			ft_dprintf(2, "(%s) process[%d] terminated by signal.\n",
 					tab->cmd_list[tab->cmd_cnt].full_cmd[0],
 					tab->child_pid_list[tab->cmd_cnt]);
 	}
@@ -110,7 +111,7 @@ int	main(int argc, char **argv, char **envp)
 	t_error_code	error_code;
 	t_pipex_tab		*tab;
 
-	error_code = check_input(argc, argv, envp, TRUE);
+	error_code = check_input(argc, argv, envp, true);
 	if (error_code != ERROR_NONE)
 		exit(error_code);
 	tab = malloc(sizeof(t_pipex_tab) * 1);

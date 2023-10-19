@@ -6,11 +6,12 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:34 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/18 22:10:55 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/19 17:29:00 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "ft_printf.h"
 #include "error.h"
 #include "common.h"
 
@@ -29,12 +30,12 @@ bool	check_input_format(int argc, bool is_bonus)
 {
 	if (!is_bonus && argc != 5)
 	{
-		dprintf(2, "./pipex: infile cmd1 cmd2 outfile\n");
+		ft_dprintf(2, "./pipex: infile cmd1 cmd2 outfile\n");
 		return (false);
 	}
 	else if (is_bonus && argc < 4)
 	{
-		dprintf(2, "./pipex: infile cmd1 ... cmd[n] outfile (n >= 1)\n");
+		ft_dprintf(2, "./pipex: infile cmd1 ... cmd[n] outfile (n >= 1)\n");
 		return (false);
 	}
 	return (true);
@@ -57,12 +58,12 @@ bool	check_input_cmd(int argc, char **argv, char **envp)
 		exec_cmd = get_exec_path(tmp_cmd[0], envp);
 		if (!exec_cmd)
 		{
-			dprintf(2, "./pipex: %s: command not found\n", tmp_cmd[0]);
+			ft_dprintf(2, "./pipex: %s: command not found\n", tmp_cmd[0]);
 			ret = false;
 		}
 		else if (access(exec_cmd, X_OK) != 0)
 		{
-			dprintf(2, "./pipex: %s: Permission denied\n", tmp_cmd[0]);
+			ft_dprintf(2, "./pipex: %s: Permission denied\n", tmp_cmd[0]);
 			ret = false;
 		}
 		safe_free((void **)&exec_cmd);
@@ -78,19 +79,19 @@ bool	check_file(int argc, char **argv)
 	ret = true;
 	if (access(argv[1], F_OK) != 0)
 	{
-		dprintf(2, "./pipex: %s: No such file or directory\n", argv[1]);
+		ft_dprintf(2, "./pipex: %s: No such file or directory\n", argv[1]);
 		ret = false;
 	}
 	else if (access(argv[1], R_OK) != 0)
 	{
-		dprintf(2, "./pipex: %s: Permission denied\n", argv[1]);
+		ft_dprintf(2, "./pipex: %s: Permission denied\n", argv[1]);
 		ret = false;
 	}
 	if (access(argv[argc - 1], F_OK) != 0)
 		open(argv[argc - 1], O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR);
 	else if (access(argv[argc - 1], W_OK) != 0)
 	{
-		dprintf(2, "./pipex: %s: Permission denied\n", argv[argc - 1]);
+		ft_dprintf(2, "./pipex: %s: Permission denied\n", argv[argc - 1]);
 		ret = false;
 	}
 	return (ret);

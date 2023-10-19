@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:18 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/19 11:39:14 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/19 17:17:07 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <ctype.h>
-
-# define TRUE 1
-# define FALSE 0
 
 typedef struct s_cmd
 {
