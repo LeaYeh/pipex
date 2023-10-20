@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:34 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/20 00:27:42 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/20 13:12:36 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ bool	check_input_cmd(int argc, char **argv, char **envp)
 	int		i;
 	char	**tmp_cmd;
 	char	*exec_cmd;
-	
+
 	ret = true;
 	i = 2;
 	while (i < argc - 1)
