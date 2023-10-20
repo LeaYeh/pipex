@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:34 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/20 13:12:36 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/20 13:42:08 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ bool	check_input_format(int argc, bool is_bonus)
 		ft_dprintf(2, "./pipex: infile cmd1 cmd2 outfile\n");
 		return (false);
 	}
-	else if (is_bonus && argc < 4)
+	else if (is_bonus && argc < 5)
 	{
-		ft_dprintf(2, "./pipex: infile cmd1 ... cmd[n] outfile (n >= 1)\n");
+		ft_dprintf(2, "./pipex: infile cmd1 ... cmd[n] outfile (n >= 2)\n");
 		return (false);
 	}
 	return (true);

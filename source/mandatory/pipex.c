@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/20 13:14:03 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/20 13:41:15 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	_setup_fd(int *fd_in, int *fd_out, int idx, t_pipex_tab *tab)
 	static int	prev_read_end;
 	int			pipefd[2];
 
-	if (idx < (tab->cmd_cnt - 1))
+	if (idx < ft_max(2, (tab->cmd_cnt - 1), 1))
 	{
 		if (pipe(pipefd) == -1)
 		{
