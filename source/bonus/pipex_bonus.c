@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/21 15:46:03 by lyeh             ###   ########.fr       */
+/*   Created: 2023/10/21 15:42:53 by lyeh              #+#    #+#             */
+/*   Updated: 2023/10/21 15:44:08 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	main(int argc, char **argv, char **envp)
 	t_error_code	error_code;
 	t_pipex_tab		*tab;
 
-	error_code = check_input(argc, argv, envp, true);
+	error_code = check_input(argc, argv, envp, false);
 	if (error_code != ERROR_NONE)
 		exit(error_code);
 	tab = malloc(sizeof(t_pipex_tab) * 1);

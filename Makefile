@@ -10,11 +10,10 @@ DPRINTF_DIR	:= $(SRC_DIR)/ftdprintf
 
 COMMON_SRCS	:= error.c \
 			free.c \
-			utils.c
-MAJOR_SRCS	:= pipex.c \
+			utils.c \
 			process.c
-BONUS_SRCS	:= pipex.c \
-			process.c
+MAJOR_SRCS	:= pipex.c
+BONUS_SRCS	:= pipex_bonus.c
 
 COMMON_SRCS := $(addprefix $(COMMON_DIR)/, $(COMMON_SRCS))
 MAJOR_SRCS := $(addprefix $(MAJOR_DIR)/, $(MAJOR_SRCS))
@@ -42,7 +41,7 @@ $(BUILD_DIR)/%.o: $(BONUS_DIR)/%.c
 			$(CC) $(CFLAGS) -c $< -o $@
 
 
-.PHONY:		all bonus clean fclean re test test_b
+.PHONY:		all bonus clean fclean re
 
 $(NAME):	$(COMMON_OBJS) $(MAJOR_OBJS)
 			@make -C $(LIBFT_DIR) bonus
