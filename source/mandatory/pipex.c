@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/20 13:41:15 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/21 15:14:01 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ void	pipex(t_pipex_tab *tab)
 		if (WIFEXITED(status))
 			ft_dprintf(2, "(%s) process success.\n",
 				tab->cmd_list[i].full_cmd[0]);
-		// else if (WIFSIGNALED(status))
-		// 	ft_dprintf(2, "(%s) process terminated by signal.\n",
-		// 		tab->cmd_list[i].full_cmd[0]);
+		else if (WIFSIGNALED(status))
+			ft_dprintf(2, "(%s) process terminated by signal.\n",
+				tab->cmd_list[i].full_cmd[0]);
 	}
 }
 

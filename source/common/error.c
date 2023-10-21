@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:34 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/20 13:42:08 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/21 15:15:07 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ bool	check_input_cmd(int argc, char **argv, char **envp)
 	char	**tmp_cmd;
 	char	*exec_cmd;
 
-	ret = true;
+	ret = false;
 	i = 2;
 	while (i < argc - 1)
 	{
@@ -57,15 +57,11 @@ bool	check_input_cmd(int argc, char **argv, char **envp)
 			exit(ERROR_MEM_ALLOC_FAILED);
 		exec_cmd = get_exec_path(tmp_cmd[0], envp);
 		if (!exec_cmd)
-		{
 			ft_dprintf(2, "./pipex: %s: command not found\n", tmp_cmd[0]);
-			ret = false;
-		}
 		else if (access(exec_cmd, X_OK) != 0)
-		{
 			ft_dprintf(2, "./pipex: %s: Permission denied\n", tmp_cmd[0]);
-			ret = false;
-		}
+		else
+			ret = true;
 		safe_free((void **)&exec_cmd);
 		free_array((void **)tmp_cmd, -1);
 	}

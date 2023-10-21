@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:41 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/20 13:20:25 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/21 15:14:10 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	free_cmd_list(t_cmd *cmd_list, int len)
 	while (i < len)
 	{
 		free_array((void **)cmd_list[i].full_cmd, len);
-		// safe_free((void **)&cmd_list[i].exec_cmd);
 		i++;
 	}
 	free (cmd_list);
