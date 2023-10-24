@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 21:42:04 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/18 21:58:32 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/24 12:02:52 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef enum s_error_code{
 	ERROR_INVALID_FILE,
 	ERROR_INVALID_CMD,
 	ERROR_INIT_PIPE_FAILED,
+	ERROR_INIT_CMD_LIST_FAILED,
 	ERROR_FORK_PROC_FAILED,
 	ERROR_MEM_ALLOC_FAILED,
 	ERROR_EXEC_FAILED,

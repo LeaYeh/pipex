@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/21 15:46:03 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/24 12:04:30 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,17 @@ void	pipex(t_pipex_tab *tab)
 	}
 }
 
-void	init_pipex_table(int argc, char **argv, char **envp, t_pipex_tab *tab)
+bool	init_cmd_list(int argc, char **argv, char **envp, t_pipex_tab *tab)
 {
 	int		i;
 	char	**full_cmd;
 
 	tab->cmd_list = malloc(sizeof(t_cmd) * (argc - 3));
 	if (!tab->cmd_list)
-		exit(ERROR_MEM_ALLOC_FAILED);
-	tab->child_pid_list = ft_calloc(argc - 3, sizeof(int));
-	if (tab->child_pid_list == NULL)
-		exit(ERROR_MEM_ALLOC_FAILED);
+	{
+		ft_dprintf(2, "Init cmd list, memory alloc failed.\n");
+		return (false);
+	}
 	tab->cmd_cnt = argc - 3;
 	i = 0;
 	while (i + 2 < argc - 1)
@@ -91,15 +91,29 @@ void	init_pipex_table(int argc, char **argv, char **envp, t_pipex_tab *tab)
 		full_cmd = ft_split(argv[i + 2], ' ');
 		if (!full_cmd)
 		{
+			ft_dprintf(2, "Split full_cmd, memory alloc failed.\n");
 			free_cmd_list(tab->cmd_list, i);
-			exit(ERROR_MEM_ALLOC_FAILED);
+			return (false);
 		}
 		set_cmd_params(&tab->cmd_list[i], full_cmd, envp);
 		i++;
 	}
+	return (true);
+}
+
+void	init_pipex_table(int argc, char **argv, char **envp, t_pipex_tab *tab)
+{
+	if (!init_cmd_list(argc, argv, envp, tab))
+		exit(ERROR_INIT_CMD_LIST_FAILED);
+	tab->child_pid_list = ft_calloc(argc - 3, sizeof(int));
+	if (tab->child_pid_list == NULL)
+		exit(ERROR_MEM_ALLOC_FAILED);
+	tab->envp = envp;
 	tab->infile = open(argv[1], O_RDONLY);
 	tab->outfile = open(argv[argc - 1], O_TRUNC | O_CREAT | O_RDWR, 0644);
-	tab->envp = envp;
+	tab->fd_in = -1;
+	tab->fd_out = -1;
+	tab->prev_read_end = -1;
 }
 
 int	main(int argc, char **argv, char **envp)
