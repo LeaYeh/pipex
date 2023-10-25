@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 19:46:03 by lyeh              #+#    #+#             */
-/*   Updated: 2023/09/10 12:47:43 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/24 12:52:31 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
+# include <stdarg.h>
 
 /*
 ** String
@@ -59,6 +60,8 @@ void	*ft_memmove(void *dst, const void *src, size_t len);
 void	*ft_memchr(const void *src, int c, size_t len);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
+int		ft_max(int count, ...);
+int		ft_min(int count, ...);
 
 /*
 ** Output
