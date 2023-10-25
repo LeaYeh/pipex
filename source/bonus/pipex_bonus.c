@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/25 14:26:53 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/24 12:55:31 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 	t_error_code	error_code;
 	t_pipex_tab		*tab;
 
-	error_code = check_input(argc, argv, envp, false);
+	error_code = check_input(argc, argv, envp, true);
 	if (error_code != ERROR_NONE)
 		exit(error_code);
 	tab = malloc(sizeof(t_pipex_tab) * 1);
