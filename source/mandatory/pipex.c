@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/24 12:04:30 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/24 12:55:31 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,54 +16,21 @@
 #include "ft_printf.h"
 #include "common.h"
 
-static void	_setup_fd(int *fd_in, int *fd_out, int idx, t_pipex_tab *tab)
-{
-	static int	prev_read_end;
-	int			pipefd[2];
-
-	if (idx < ft_max(2, (tab->cmd_cnt - 1), 1))
-	{
-		if (pipe(pipefd) == -1)
-		{
-			close(prev_read_end);
-			free_pipex_table(tab);
-			exit(ERROR_INIT_PIPE_FAILED);
-		}
-	}
-	*fd_in = tab->infile;
-	*fd_out = tab->outfile;
-	if (idx == 0)
-		*fd_out = pipefd[1];
-	else if (idx == tab->cmd_cnt - 1)
-		*fd_in = prev_read_end;
-	else
-	{
-		*fd_in = prev_read_end;
-		*fd_out = pipefd[1];
-	}
-	prev_read_end = pipefd[0];
-}
-
 void	pipex(t_pipex_tab *tab)
 {
 	int	i;
-	int	fd_in;
-	int	fd_out;
 	int	status;
 
 	i = 0;
 	while (i < tab->cmd_cnt)
 	{
-		_setup_fd(&fd_in, &fd_out, i, tab);
-		create_proc(fd_in, fd_out, i, tab);
-		close(fd_in);
-		close(fd_out);
+		create_proc(tab, i);
 		i++;
 	}
 	i = tab->cmd_cnt;
 	while (i-- > 0)
 	{
-		waitpid(tab->child_pid_list[i], &status, WNOHANG);
+		waitpid(tab->child_pid_list[i], &status, 0);
 		if (WIFEXITED(status))
 			ft_dprintf(2, "(%s) process success.\n",
 				tab->cmd_list[i].full_cmd[0]);
