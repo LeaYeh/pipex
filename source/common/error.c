@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:34 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/26 20:17:54 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/26 20:54:27 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,18 @@ bool	check_input_format(int argc, bool is_bonus)
 
 bool	check_cmd(t_pipex_tab *tab, int cur_idx)
 {
-	if (access(tab->cmd_list[cur_idx].full_cmd[0], F_OK) != 0)
+	if (access(tab->cmd_list[cur_idx].exec_cmd, F_OK) != 0)
 	{
 		ft_dprintf(2, "%s: %s: Command not found.\n",
 			tab->program_name,
-			tab->cmd_list[cur_idx].full_cmd[0]);
+			tab->cmd_list[cur_idx].exec_cmd);
 		return (false);
 	}
-	else if (access(tab->cmd_list[cur_idx].full_cmd[0], X_OK) != 0)
+	else if (access(tab->cmd_list[cur_idx].exec_cmd, X_OK) != 0)
 	{
 		ft_dprintf(2, "%s: %s: ",
 			tab->program_name,
-			tab->cmd_list[cur_idx].full_cmd[0]);
+			tab->cmd_list[cur_idx].exec_cmd);
 		perror("");
 		return (false);
 	}

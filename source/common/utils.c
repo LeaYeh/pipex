@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:48 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/26 20:18:13 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/26 21:02:24 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,10 @@ char	*extract_env(char **envp, char *env)
 
 void	set_cmd_params(t_cmd *cmd, char **full_cmd, char **envp)
 {
-	char	*tmp;
-	char	*exec_cmd;
-
 	cmd->full_cmd = full_cmd;
-	exec_cmd = get_exec_path(full_cmd[0], envp);
-	if (exec_cmd == NULL)
-		return ;
-	tmp = full_cmd[0];
-	full_cmd[0] = exec_cmd;
-	safe_free((void **)&tmp);
+	cmd->exec_cmd = get_exec_path(full_cmd[0], envp);
+	if (cmd->exec_cmd == NULL)
+		cmd->exec_cmd = full_cmd[0];
 }
 
 char	*get_exec_path(char *cmd, char **envp)
@@ -56,6 +50,8 @@ char	*get_exec_path(char *cmd, char **envp)
 	char	*exec_path;
 	int		i;
 
+	if (ft_strchr(cmd, '/') && access(cmd, F_OK) == 0)
+		return (ft_strdup(cmd));
 	exec_path = extract_env(envp, "PATH");
 	all_path = ft_split(exec_path, ':');
 	safe_free((void **)&exec_path);

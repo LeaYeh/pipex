@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/26 20:18:25 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/26 21:05:46 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ bool	init_cmd_list(int argc, char **argv, char **envp, t_pipex_tab *tab)
 			free_cmd_list(tab->cmd_list, i);
 			return (false);
 		}
-		set_cmd_params(&tab->cmd_list[i], full_cmd, envp);
+		tab->cmd_list[i].full_cmd = full_cmd;
+		tab->cmd_list[i].exec_cmd = get_exec_path(full_cmd[0], envp);
+		if (tab->cmd_list[i].exec_cmd == NULL)
+			tab->cmd_list[i].exec_cmd = full_cmd[0];
 		i++;
 	}
 	return (true);
