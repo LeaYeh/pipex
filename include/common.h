@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:18 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/24 12:43:03 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/26 19:04:30 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ typedef struct s_cmd
 
 typedef struct s_pipex_tab
 {
+	char	*program_name;
+	char	*infile_path;
+	char	*outfile_path;
 	int		pipefd[2];
-	int		infile;
-	int		outfile;
 	int		fd_in;
 	int		fd_out;
 	int		prev_read_end;
