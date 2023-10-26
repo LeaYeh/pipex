@@ -6,12 +6,11 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:48 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/26 19:40:28 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/26 20:18:13 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "common.h"
+#include "pipex.h"
 
 char	*extract_env(char **envp, char *env)
 {
@@ -94,5 +93,5 @@ char	*get_base_filename(char	*full_name)
 	if (!tmp)
 		return (NULL);
 	ret = ft_strdup(tmp[get_array_len((void **)tmp) - 1]);
-	return (tmp[get_array_len((void **)tmp) - 1]);
+	return (ret);
 }

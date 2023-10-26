@@ -1,20 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/24 12:55:31 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/26 20:17:26 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "error.h"
 #include "pipex.h"
-#include "libft.h"
-#include "ft_printf.h"
-#include "common.h"
 
 void	pipex(t_pipex_tab *tab)
 {

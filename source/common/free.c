@@ -6,13 +6,11 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:41 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/26 19:36:52 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/26 20:18:02 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "common.h"
-#include "error.h"
+#include "pipex.h"
 
 void	safe_free(void **buf)
 {

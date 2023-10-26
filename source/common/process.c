@@ -6,41 +6,11 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 19:07:56 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/26 19:49:48 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/26 20:18:08 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "common.h"
-#include "error.h"
-#include "ft_printf.h"
-
-bool	check_cmd(t_pipex_tab *tab, int cur_idx)
-{
-	if (access(tab->cmd_list[cur_idx].full_cmd[0], F_OK | X_OK) != 0)
-	{
-		ft_dprintf(2,
-			"%s: %s: ", tab->program_name, tab->cmd_list[cur_idx].full_cmd[0]);
-		perror("");
-		return (false);
-	}
-	return (true);
-}
-
-bool	check_file(t_pipex_tab *tab, int cur_idx)
-{
-	if (cur_idx == 0)
-		tab->fd_in = open(tab->infile_path, O_RDONLY);
-	if (cur_idx == (tab->cmd_cnt - 1))
-		tab->fd_out = open(tab->outfile_path, O_TRUNC | O_CREAT | O_RDWR, 0644);
-	if (tab->fd_in == -1 || tab->fd_out == -1)
-	{
-		ft_dprintf(2, "here1: ");
-		perror(tab->program_name);
-		return (false);
-	}
-	return (true);
-}
+#include "pipex.h"
 
 void	do_child(t_pipex_tab *tab, int cur_idx)
 {
@@ -52,9 +22,9 @@ void	do_child(t_pipex_tab *tab, int cur_idx)
 	if (dup2(tab->fd_in, STDIN_FILENO) == -1 || \
 		dup2(tab->fd_out, STDOUT_FILENO) == -1)
 	{
-		ft_dprintf(2, "here2: ");
 		perror(tab->program_name);
 		free_pipex_table(tab);
+		exit(ERROR_FD_DUP_FAILED);
 	}
 	safe_close(&tab->pipefd[0]);
 	safe_close(&tab->pipefd[1]);
@@ -65,6 +35,7 @@ void	do_child(t_pipex_tab *tab, int cur_idx)
 	}
 	execve(tab->cmd_list[cur_idx].full_cmd[0],
 		tab->cmd_list[cur_idx].full_cmd, tab->envp);
+	free_pipex_table(tab);
 	exit(ERROR_EXEC_FAILED);
 }
 

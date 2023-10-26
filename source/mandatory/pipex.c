@@ -6,15 +6,11 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/26 19:39:15 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/26 20:18:25 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "error.h"
 #include "pipex.h"
-#include "libft.h"
-#include "ft_printf.h"
-#include "common.h"
 
 void	pipex(t_pipex_tab *tab)
 {
@@ -29,15 +25,7 @@ void	pipex(t_pipex_tab *tab)
 	}
 	i = tab->cmd_cnt;
 	while (i-- > 0)
-	{
 		waitpid(tab->child_pid_list[i], &status, 0);
-		if (WIFEXITED(status))
-			ft_dprintf(2, "(%s) process success.\n",
-				tab->cmd_list[i].full_cmd[0]);
-		else if (WIFSIGNALED(status))
-			ft_dprintf(2, "(%s) process terminated by signal.\n",
-				tab->cmd_list[i].full_cmd[0]);
-	}
 }
 
 bool	init_cmd_list(int argc, char **argv, char **envp, t_pipex_tab *tab)
