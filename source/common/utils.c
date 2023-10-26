@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:48 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/26 19:21:38 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/26 19:40:28 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,17 @@ char	*extract_env(char **envp, char *env)
 	return (path);
 }
 
-// void	set_cmd_params(t_cmd *cmd, char **full_cmd, char **envp)
-// {
-// 	cmd->exec_cmd = get_exec_path(full_cmd[0], envp);
-// 	cmd->full_cmd = full_cmd;
-// }
-
 void	set_cmd_params(t_cmd *cmd, char **full_cmd, char **envp)
 {
 	char	*tmp;
 	char	*exec_cmd;
 
+	cmd->full_cmd = full_cmd;
 	exec_cmd = get_exec_path(full_cmd[0], envp);
 	if (exec_cmd == NULL)
 		return ;
 	tmp = full_cmd[0];
 	full_cmd[0] = exec_cmd;
-	cmd->full_cmd = full_cmd;
 	safe_free((void **)&tmp);
 }
 
@@ -89,4 +83,16 @@ int	get_array_len(void **arr)
 	while (arr && arr[i])
 		i++;
 	return (i);
+}
+
+char	*get_base_filename(char	*full_name)
+{
+	char	*ret;
+	char	**tmp;
+
+	tmp = ft_split(full_name, '/');
+	if (!tmp)
+		return (NULL);
+	ret = ft_strdup(tmp[get_array_len((void **)tmp) - 1]);
+	return (tmp[get_array_len((void **)tmp) - 1]);
 }

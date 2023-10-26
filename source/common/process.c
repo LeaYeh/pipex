@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 19:07:56 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/26 19:18:41 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/26 19:49:48 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,19 @@
 #include "error.h"
 #include "ft_printf.h"
 
-void	do_child(t_pipex_tab *tab, int cur_idx)
+bool	check_cmd(t_pipex_tab *tab, int cur_idx)
+{
+	if (access(tab->cmd_list[cur_idx].full_cmd[0], F_OK | X_OK) != 0)
+	{
+		ft_dprintf(2,
+			"%s: %s: ", tab->program_name, tab->cmd_list[cur_idx].full_cmd[0]);
+		perror("");
+		return (false);
+	}
+	return (true);
+}
+
+bool	check_file(t_pipex_tab *tab, int cur_idx)
 {
 	if (cur_idx == 0)
 		tab->fd_in = open(tab->infile_path, O_RDONLY);
@@ -25,7 +37,17 @@ void	do_child(t_pipex_tab *tab, int cur_idx)
 	{
 		ft_dprintf(2, "here1: ");
 		perror(tab->program_name);
+		return (false);
+	}
+	return (true);
+}
+
+void	do_child(t_pipex_tab *tab, int cur_idx)
+{
+	if (!check_file(tab, cur_idx))
+	{
 		free_pipex_table(tab);
+		exit(ERROR_INVALID_FILE);
 	}
 	if (dup2(tab->fd_in, STDIN_FILENO) == -1 || \
 		dup2(tab->fd_out, STDOUT_FILENO) == -1)
@@ -36,11 +58,13 @@ void	do_child(t_pipex_tab *tab, int cur_idx)
 	}
 	safe_close(&tab->pipefd[0]);
 	safe_close(&tab->pipefd[1]);
+	if (!check_cmd(tab, cur_idx))
+	{
+		free_pipex_table(tab);
+		exit(ERROR_INVALID_CMD);
+	}
 	execve(tab->cmd_list[cur_idx].full_cmd[0],
 		tab->cmd_list[cur_idx].full_cmd, tab->envp);
-	ft_dprintf(2, "%s: %s: ", tab->program_name, tab->cmd_list[cur_idx].full_cmd[0]);
-	perror("");
-	free_pipex_table(tab);
 	exit(ERROR_EXEC_FAILED);
 }
 

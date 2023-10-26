@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:41 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/24 12:04:05 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/26 19:36:52 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void	free_array(void **arr, int count)
 	while (i < count)
 	{
 		if (arr[i])
-			free(arr[i]);
+			safe_free((void **)&arr[i]);
 		i++;
 	}
-	free(arr);
+	safe_free((void **)arr);
 	arr = NULL;
 }
 
@@ -66,10 +66,8 @@ void	safe_close(int *fd)
 
 void	free_pipex_table(t_pipex_tab *tab)
 {
-	safe_close(&tab->infile);
-	safe_close(&tab->outfile);
-	safe_close(&tab->fd_in);
-	safe_close(&tab->fd_out);
+	safe_close(&tab->pipefd[0]);
+	safe_close(&tab->pipefd[1]);
 	safe_close(&tab->prev_read_end);
 	free_cmd_list(tab->cmd_list, tab->cmd_cnt);
 	free(tab->child_pid_list);

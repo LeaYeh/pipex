@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/26 19:12:38 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/26 19:39:15 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	init_pipex_table(int argc, char **argv, char **envp, t_pipex_tab *tab)
 	if (tab->child_pid_list == NULL)
 		exit(ERROR_MEM_ALLOC_FAILED);
 	tab->envp = envp;
-	tab->program_name = argv[0]; 
+	tab->program_name = argv[0];
 	tab->infile_path = argv[1];
 	tab->outfile_path = argv[argc - 1];
 	tab->fd_in = -1;

@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 21:42:04 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/24 12:02:52 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/26 19:51:27 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ typedef enum s_error_code{
 t_error_code	check_input(int argc, char **argv, char **envp, bool is_bonus);
 bool			check_input_format(int argc, bool is_bonus);
 bool			check_input_cmd(int argc, char **argv, char **envp);
-bool			check_file(int argc, char **argv);
+// bool			check_file(int argc, char **argv);
 
 #endif
