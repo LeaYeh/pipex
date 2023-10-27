@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:41 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/26 21:02:36 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/27 14:56:44 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	safe_free(void **buf)
 {
-	if (*buf == NULL)
-		return ;
 	free(*buf);
 	*buf = NULL;
 }
@@ -37,7 +35,7 @@ void	free_array(void **arr, int count)
 			safe_free((void **)&arr[i]);
 		i++;
 	}
-	safe_free((void **)arr);
+	free(arr);
 	arr = NULL;
 }
 
@@ -48,10 +46,11 @@ void	free_cmd_list(t_cmd *cmd_list, int len)
 	i = 0;
 	while (i < len)
 	{
-		free_array((void **)cmd_list[i].full_cmd, len);
+		free(cmd_list[i].exec_cmd);
+		free_array((void **)cmd_list[i].full_cmd, -1);
 		i++;
 	}
-	free (cmd_list);
+	free(cmd_list);
 }
 
 void	safe_close(int *fd)

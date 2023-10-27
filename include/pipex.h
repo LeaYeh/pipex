@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 00:32:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/26 20:51:33 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/27 14:42:33 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct s_pipex_tab
 bool	check_input_format(int argc, bool is_bonus);
 bool	check_cmd(t_pipex_tab *tab, int cur_idx);
 bool	check_file(t_pipex_tab *tab, int cur_idx);
-
 void	safe_free(void **buf);
 void	safe_close(int *fd);
 void	free_array(void **arr, int count);

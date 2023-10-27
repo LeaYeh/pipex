@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:44:48 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/26 21:02:24 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/27 14:42:47 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,6 @@ char	*extract_env(char **envp, char *env)
 		i++;
 	}
 	return (path);
-}
-
-void	set_cmd_params(t_cmd *cmd, char **full_cmd, char **envp)
-{
-	cmd->full_cmd = full_cmd;
-	cmd->exec_cmd = get_exec_path(full_cmd[0], envp);
-	if (cmd->exec_cmd == NULL)
-		cmd->exec_cmd = full_cmd[0];
 }
 
 char	*get_exec_path(char *cmd, char **envp)

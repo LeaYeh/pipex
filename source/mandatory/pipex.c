@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/26 21:05:46 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/27 15:07:02 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ bool	init_cmd_list(int argc, char **argv, char **envp, t_pipex_tab *tab)
 
 	tab->cmd_list = malloc(sizeof(t_cmd) * (argc - 3));
 	if (!tab->cmd_list)
-	{
-		ft_dprintf(2, "Init cmd list, memory alloc failed.\n");
 		return (false);
-	}
 	tab->cmd_cnt = argc - 3;
 	i = 0;
 	while (i + 2 < argc - 1)
@@ -46,14 +43,13 @@ bool	init_cmd_list(int argc, char **argv, char **envp, t_pipex_tab *tab)
 		full_cmd = ft_split(argv[i + 2], ' ');
 		if (!full_cmd)
 		{
-			ft_dprintf(2, "Split full_cmd, memory alloc failed.\n");
 			free_cmd_list(tab->cmd_list, i);
 			return (false);
 		}
 		tab->cmd_list[i].full_cmd = full_cmd;
 		tab->cmd_list[i].exec_cmd = get_exec_path(full_cmd[0], envp);
 		if (tab->cmd_list[i].exec_cmd == NULL)
-			tab->cmd_list[i].exec_cmd = full_cmd[0];
+			tab->cmd_list[i].exec_cmd = ft_strdup(full_cmd[0]);
 		i++;
 	}
 	return (true);
