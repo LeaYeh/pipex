@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:45:05 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/29 16:01:57 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/27 15:07:02 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex_tab		*tab;
 
-	if (!check_input_format(argc, false))
+	if (!check_input_format(argc, true))
 		exit(ERROR_INVALID_INPUT);
 	tab = malloc(sizeof(t_pipex_tab) * 1);
 	if (!tab)
